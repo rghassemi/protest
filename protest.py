@@ -1,11 +1,29 @@
 from numpy import zeros
+import pika
 import numpy
 from PIL import BdfFontFile
 from rgbmatrix import graphics, RGBMatrixOptions, RGBMatrix
+import time
+
 fp = open('6x10.bdf','rb')
 b = BdfFontFile.BdfFontFile(fp)
 fp.close()
 
+connection = pika.BlockingConnection(pika.ConnectionParameters(
+        host='localhost'))
+channel = connection.channel()
+
+channel.queue_declare(queue='task_queue', durable=True)
+channel.basic_qos(prefetch_count=1)
+the_text = "Life"
+def suscriber(ch,method , properties , body):
+        print "[Y] received %r " % (body,)
+        time.sleep( body.count('.') )
+        print " [x] Done"
+        the_text = body
+        ch.basic_ack(delivery_tag = method.delivery_tag)
+
+#channel.basic_consume(suscriber, queue = 'task_queue' )
 
 def get_ascii_pixels(character, rotate=None):
     ascii_value = ord(character)
@@ -110,6 +128,18 @@ class Matrix(object):
         self.reverse_lines.append(LineCursor(self.canvas, 21, rotated=True))
         self.reverse_lines.append(LineCursor(self.canvas, 11, rotated=True))
 
+    def reset(self):
+        self.forward_lines = []
+        self.reverse_lines = []
+
+        self.forward_lines.append(LineCursor(self.canvas, 0))
+        self.forward_lines.append(LineCursor(self.canvas, 10))
+        self.forward_lines.append(LineCursor(self.canvas, 20))
+
+        self.reverse_lines.append(LineCursor(self.canvas, 31, rotated=True))
+        self.reverse_lines.append(LineCursor(self.canvas, 21, rotated=True))
+        self.reverse_lines.append(LineCursor(self.canvas, 11, rotated=True))
+
     def draw_the_line(self, line_number, text,start_column=None):
         
         self.forward_lines[line_number].draw_line(text, start_column)
@@ -147,6 +177,7 @@ def test():
     m.draw_the_line(1, "Before")
     m.draw_the_line(2, "Party")
     start_column = 0
+    the_text = "Life"
     while True:
         #m.hardware.matrix.Clear()
         #for i in range(3):
@@ -159,8 +190,20 @@ def test():
         #    start_column += 1
         #else:
         #    start_column = 0
-        
-        
+        #the_text = "Life"
+        m.hardware.matrix.Clear() 
+        m.reset()        
+        #for i in range(3):
+        #    m.forward_lines[i].reset()
+        #    m.reverse_lines[i].reset()
+        method_frame, header_frame, body = channel.basic_get("task_queue")
+        if method_frame:
+            the_text = body
+            print 'Got: %s' % the_text
+        print the_text
+        m.draw_the_line(0, the_text)
+        m.draw_the_line(1, "Before")
+        m.draw_the_line(2, "Party") 
         
         
         m.hardware.matrix.SwapOnVSync(m.canvas)

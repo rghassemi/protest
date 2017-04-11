@@ -5,7 +5,7 @@ from PIL import BdfFontFile
 from rgbmatrix import graphics, RGBMatrixOptions, RGBMatrix
 import time
 
-fp = open('6x10.bdf','rb')
+fp = open('/protest/protest/6x10.bdf','rb')
 b = BdfFontFile.BdfFontFile(fp)
 fp.close()
 

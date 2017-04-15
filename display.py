@@ -1,6 +1,6 @@
 from numpy import zeros
 import numpy
-from PIL import BdfFontFile
+from PIL import BdfFontFile, Image
 from rgbmatrix import graphics, RGBMatrixOptions, RGBMatrix
 
 fp = open('/protest/protest/6x10.bdf','rb')
@@ -49,6 +49,7 @@ class LineCursor(object):
         self.get_letter = get_letter
         self.pixels = []
 
+
         if self.rotated:
             self.start_column = 127
             self.stop_column = 64
@@ -57,6 +58,7 @@ class LineCursor(object):
             self.start_column = 0
             self.increment = 1
             self.stop_column = 63
+
 
         self.current_column = self.start_column
         self.current_row = self.line_number
@@ -175,7 +177,9 @@ class ThreeLineDisplay(object):
         self.rotated_lines.append(LineCursor(self.canvas, 31, rotated=True))
         self.rotated_lines.append(LineCursor(self.canvas, 21, rotated=True))
         self.rotated_lines.append(LineCursor(self.canvas, 11, rotated=True))
-
+        self.width = self.hardware.matrix.width
+        self.height = self.hardware.matrix.height
+        self.matrix = self.hardware.matrix
     def update(self):
         self.hardware.matrix.SwapOnVSync(self.canvas)
 
@@ -183,44 +187,46 @@ class ThreeLineDisplay(object):
         self.forward_lines[line_number].clear()
         self.rotated_lines[line_number].clear()
 
-    def draw_the_line(self, line_number=None, text=None, queue=None, start_column=0, red=0, green=255, blue=0):
-        print red, green, blue
+    def draw_the_line(self, line_number=None, text=None, queue=None, start_column=0, color = (255, 0, 0)):
+        (red, green, blue) = color
         self.forward_lines[line_number].draw_line(text=text, start_column=start_column, queue=queue, red=red, green=green, blue=blue)
         self.rotated_lines[line_number].draw_line(text=text, start_column=127-start_column, queue=queue, red=red, green=green, blue=blue)
 
         #self.lines[line_number].draw_line(text, 0)
         #self.lines[line_number+3].draw_line(text, 0)
 
+    def draw_image(self, image_path):
+        image = Image.open(image_path)
+        #image.thumbnail((self.height, self.width), Image.ANTIALIAS)
+        image.resize((self.matrix.width, self.matrix.height), Image.ANTIALIAS)
+        self.matrix.SetImage(image, 0, 0)
+
+    def scroll_line(self, line_number):
+        self.forward_lines[line_number].scroll()
+        self.rotated_lines[line_number].scroll()
 if __name__ == "__main__":
     import time
     display = ThreeLineDisplay()
-    display.draw_the_line(line_number=0, queue=['Life', 'Music', 'Friends', 'Love', 'BBQ'], red=255, green=0, blue=0)
-    display.draw_the_line(line_number=1, queue=['Before', 'Instead of', '>'], start_column=15, red=0, green=255, blue=0)
-    display.draw_the_line(line_number=2, queue=['Politics', 'Parties', 'Greed', 'Apathy'], start_column=15,  red=0, green=0, blue=255)
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    BLUE = (0, 0, 255)
+
+    first_line = ['Life', 'Music', 'Friends', 'Love', 'BBQ']
+    second_line = ['Before', 'Instead of', '>']
+    third_line = ['Politics', 'Parties', 'Greed', 'Apathy']
+
+    display.draw_the_line(line_number=0, queue=first_line, color=RED)
+    display.draw_the_line(line_number=1, queue=second_line, start_column=15, color=GREEN)
+    display.draw_the_line(line_number=2, queue=third_line, start_column=15,  color=BLUE)
     display.update()
-    for i in range(500):
-        time.sleep(0.1)
-        display.forward_lines[0].scroll()
-        display.rotated_lines[0].scroll()
-        display.forward_lines[1].scroll()
-        display.rotated_lines[1].scroll()
-        display.forward_lines[2].scroll()
-        display.rotated_lines[2].scroll()
-        display.update()
 
-    #time.sleep(3)
-    #display.clear_line(0)
-    #display.update()
-    #time.sleep(1)
-
-    #display.clear_line(1)
-    #display.draw_the_line(0, "Life")
-    #display.update()
-    #print "Should see it"
-    #time.sleep(10)
-
-        
     while True:
-        pass
+        time.sleep(0.05)
+        display.scroll_line(0)
+        #display.scroll_line(1)
+        #display.scroll_line(2)
+        #display.update()
+
+
 
 

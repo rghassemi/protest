@@ -1,6 +1,6 @@
 # PiProtest
 
-[![N|Solid](https://s-media-cache-ak0.pinimg.com/736x/74/3d/b5/743db576cd482fae244b3f4a91f03038.jpg)]
+![N|Solid](https://s-media-cache-ak0.pinimg.com/736x/74/3d/b5/743db576cd482fae244b3f4a91f03038.jpg)
 
 PiProtest is a RaspberryPi based LCD protest sign that you can customize!
 This is the first cut, so for now here's what we can do together!

@@ -31,7 +31,7 @@ sudo make install-python
 
 Sweet!  We're up and running!  Let's run the example code.
 ```sh
-sudo python /protest/protest/display.py
+sudo python /protest/protest/example.py
 ```
 
 ### Hardware

@@ -187,6 +187,9 @@ class ThreeLineDisplay(object):
         self.forward_lines[line_number].clear()
         self.rotated_lines[line_number].clear()
 
+    def reset_line(self, line_number):
+        self.forward_lines[line_number].reset()
+        self.rotated_lines[line_number].reset()
     def draw_the_line(self, line_number=None, text=None, queue=None, start_column=0, color = (255, 0, 0)):
         (red, green, blue) = color
         self.forward_lines[line_number].draw_line(text=text, start_column=start_column, queue=queue, red=red, green=green, blue=blue)

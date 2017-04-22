@@ -18,6 +18,6 @@ if __name__ == "__main__":
 
     while True:
         time.sleep(0.05)
-        display.scroll_line(0)
-        display.scroll_line(1)
+        #display.scroll_line(0)
+        #display.scroll_line(1)
         display.scroll_line(2)

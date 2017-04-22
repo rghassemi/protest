@@ -52,7 +52,7 @@ if __name__ == "__main__":
         second_line = ['+ SCIENCE =']
         third_line = [('Safe Roads', BLUE),
                       ('Fit Kids', BLUE),
-                      ('ClearSkies', BLUE),
+                      ('Clear Skies', BLUE),
                       ('Safer Cars', BLUE),
                       ('Progress', BLUE),
                       ('Competition', BLUE),

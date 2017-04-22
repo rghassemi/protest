@@ -15,6 +15,11 @@ def get_ascii_pixels(character, rotate=None):
     pixels = list(im.getdata())
     width, height = im.size
     temp =  [pixels[i * width:(i + 1) * width] for i in range(height)]
+    if character == 'i':
+        slim = []
+        for row in temp:
+            slim.append(row[1:-1])
+        temp = slim
     if rotate:
         #temp = numpy.flip(temp, 1)
         #temp = numpy.flipud(temp)

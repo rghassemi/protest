@@ -9,6 +9,7 @@ if __name__ == "__main__":
 
 
 
+    WAIT_TIME = 2
 
     def third(line):
         index = 0
@@ -24,6 +25,10 @@ if __name__ == "__main__":
     YELLOW = (255, 255, 0)
     PINK = (255, 0, 255)
 
+
+    # Compassionate
+    # Care
+    # Love
     while True:
 
         # First one ###############################################
@@ -39,11 +44,60 @@ if __name__ == "__main__":
         display.draw_the_line(line_number=1, text="** Cool **", color=(255,255,0))
         display.draw_the_line(line_number=2, text="!! Again !!",  color=(255,0,255))
         display.update()
-        time.sleep(10)
+        time.sleep(WAIT_TIME)
 
         reset_all_lines()
         display.draw_the_line(line_number=0, text="Make Earth", color=YELLOW)
         display.draw_the_line(line_number=1, text="** Green **", color=GREEN)
         display.draw_the_line(line_number=2, text="!! Again !!",  color=(255,0,255))
         display.update()
-        time.sleep(10)
+        time.sleep(WAIT_TIME)
+
+        reset_all_lines()
+        display.draw_the_line(line_number=0, text="   Make", color=YELLOW)
+        display.draw_the_line(line_number=1, text="  America", color=GREEN)
+        display.draw_the_line(line_number=2, text="Smart Again",  color=(255,0,255))
+        display.update()
+        time.sleep(WAIT_TIME)
+
+        reset_all_lines()
+        display.draw_the_line(line_number=0, text="   Make", color=YELLOW)
+        display.draw_the_line(line_number=1, text="  America", color=GREEN)
+        display.draw_the_line(line_number=2, text="Love  Again",  color=(255,0,255))
+        display.update()
+        time.sleep(WAIT_TIME)
+
+        reset_all_lines()
+        display.draw_the_line(line_number=0, text="   Make", color=YELLOW)
+        display.draw_the_line(line_number=1, text="  America", color=GREEN)
+        display.draw_the_line(line_number=2, text="Care  Again",  color=(255,0,255))
+        display.update()
+        time.sleep(WAIT_TIME)
+
+        reset_all_lines()
+        display.draw_the_line(line_number=0, text="   Make", color=YELLOW)
+        display.draw_the_line(line_number=1, text="  America", color=GREEN)
+        display.draw_the_line(line_number=2, text="Think Again",  color=(255,0,255))
+        display.update()
+        time.sleep(WAIT_TIME)
+
+        reset_all_lines()
+        display.draw_the_line(line_number=0, text="All Species", color=YELLOW)
+        display.draw_the_line(line_number=1, text="    Are    ", color=GREEN)
+        display.draw_the_line(line_number=2, text="Endangered",  color=(255,0,255))
+        display.update()
+        time.sleep(WAIT_TIME)
+
+        reset_all_lines()
+        display.draw_the_line(line_number=0, text="  Ice Age", color=YELLOW)
+        display.draw_the_line(line_number=1, text="  to 1850", color=GREEN)
+        display.draw_the_line(line_number=2, text="  4\xb0 rise",  color=(255,0,255))
+        display.update()
+        time.sleep(WAIT_TIME)
+
+        reset_all_lines()
+        display.draw_the_line(line_number=0, text="   1850", color=YELLOW)
+        display.draw_the_line(line_number=1, text="  to 2017", color=GREEN)
+        display.draw_the_line(line_number=2, text="  2\xb0 rise",  color=(255,0,255))
+        display.update()
+        time.sleep(WAIT_TIME)
